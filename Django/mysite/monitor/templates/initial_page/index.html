@@ -1,12 +1,14 @@
-<!doctype html>
-<html lang="ja">
-	<head>
-		<meta charset="utf-8">
-		<title>{{title}}</title>
-	</head>
-	<body>
-		<h1>{{title}}</h1>
-		<p>{{msg}}</p>
-		<p><a href="{% url goto %}">{{goto}}</a></p>
-	</body>
+<!--2022/02/24 なぜか写真が表示されないので要調査！-->
+{% load static %}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+        <head>
+                <meta charset="utf-8">
+                <title>{{title}}</title>
+        </head>
+        <body>
+                <h1>{{title}}</h1>
+                <p>{{msg}}</p>
+                <p><a href="{% url goto %}">{{goto}}</a></p>
+                <p><img src="{% static "monitor/KDDI.png" %}" alt="My image" width="1100" height="500"></p>
+        </body>
 </html>
