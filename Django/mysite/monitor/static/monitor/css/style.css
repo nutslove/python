@@ -1,0 +1,39 @@
+body {
+    color:rgb(0, 45, 128);
+    font-size:16pt;
+}
+h1 {
+    color:black;
+    opacity:0.9;
+    font-size:30pt;
+    margin-top:0px;
+    margin-bottom:0px;
+    text-align:left;
+}
+p {
+    margin-left:50px;
+    font-size:18pt;
+}
+a {
+    color:blue;
+    text-decoration: none;
+}
+.link_button {
+    font-weight: bold;/*太字に*/
+    text-decoration: none;/*下線消す*/
+    background: skyblue;/*背景を水色に*/
+    color:white;/*文字を白に*/
+    padding:5px 10px;/*内側の余白*/
+    border-radius: 20px;/*角を丸くする*/
+    font-family: 'Avenir','Arial';/*フォントをいい感じに*/
+}
+    /*以下カーソルを当てたとき*/
+.link_button:hover {
+    background: silver;/*背景色をシルバーに*/
+    text-decoration: none;/*下線を消す*/
+}
+
+/*以下訪問済みのデザイン*/
+.link_button:visited {
+    color: gray;/*文字をグレイに*/
+}
