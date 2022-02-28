@@ -10,6 +10,12 @@
         <h1>{{title}}</h1>
         <p>{{msg}}</p>
         <p><a href="{% url goto %}">{{goto}}</a></p>
-        <p><img src="{% static "monitor/KDDI.png" %}" alt="My image" width="1100" height="500"></p>
+        <p><img src="{% static "monitor/img/KDDI.png" %}" alt="My image" width="1100" height="500"></p>
+        <form action="{% url 'form' %}" method="post">
+                {% csrf_token %}
+                <label for="msg">message: </label>
+                <input id="msg" type="text" name="msg">
+                <input type="submit" value="click">
+        </form>
 </body>
 </html>

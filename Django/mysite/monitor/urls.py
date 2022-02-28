@@ -8,5 +8,6 @@ import example.views as examview
 urlpatterns = [
     path('', views.index, name="index"),
     path('next', views.next, name="next"),
+    path('form', views.form, name="form"),
     path('exam/', examview.index, name="examindex"),
 ]
