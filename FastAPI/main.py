@@ -1,5 +1,8 @@
 from enum import Enum
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 class ModelName(str, Enum):
     Lee = "Joonki"
@@ -7,13 +10,15 @@ class ModelName(str, Enum):
     Park = "Min"
 
 app = FastAPI()
+templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.get("/")
-async def root():
-    return {"Hello": "Lee! Keep going?????!!!"}
+#@app.get("/")
+#async def root():
+#    return {"Hello": "Lee! Keep going?????!!!"}
 
 @app.get("/param_int/{item_id}")
-async def read_item(item_id: int): # FastAPIは自動でValidationチェックまでしてくれて、pythonでは型の強制力はなかった(int以外の型が入ってもエラーにならない)気がするが、FastAPIの場合実際int以外の型の値が入るとエラーになる。
+async def read_item(item_id: int): # FastAPIは自動でValidationチェックまでしてくれて、pythonでは型の強制力はなかった(int以外の型が入ってもエラーにならない)気がするが、FastAPIの場合実際int以 外の型の値が入るとエラーになる。
     return {"int_item_id": item_id}
 
 @app.get("/model/{model_name}")
@@ -22,3 +27,7 @@ async def model(model_name: ModelName): #上のModelNameクラスの下の"="の
         return {"LastName": "Lee"}
     else:
         return "I don't know that model."
+
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("root.html",{"request": request})

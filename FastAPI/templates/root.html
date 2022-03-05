@@ -1,0 +1,11 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+        <meta charset="utf-8">
+        <title>{{title | default('FastAPI Welcome Page')}}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/style.css') }}">
+</head>
+<body>
+        <h1>{{title | default('FastAPI Welcome Page')}}</h1>
+        <img src="{{ url_for('static', path='/BrooklynBridge-1.jpg') }}", alt="My image">
+</body>
+</html>

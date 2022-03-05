@@ -1,0 +1,19 @@
+body {
+    color:rgb(0, 128, 21);
+    font-size:16pt;
+}
+h1 {
+    color:black;
+    opacity:0.9;
+    font-size:30pt;
+    margin-top:0px;
+    margin-bottom:0px;
+    text-align:left;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
