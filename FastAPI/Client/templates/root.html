@@ -7,7 +7,14 @@
 <body>
         <h1>{{title | default('FastAPI Welcome Page')}}</h1>
         <img src="{{ url_for('static', path='/BrooklynBridge-1.jpg') }}", alt="My image">
-        <p>Puls Result: {{ result }}</p>
+        <form method="post">
+                <label for="num1">数字1: </label>
+                <input type="number" name="num1" value=""/><br>
+                <label for="num2">数字2: </label>
+                <input type="number" name="num2"><br>
+                <input type="submit" value="足し算">
+        </form>
+        <p>計算結果 = {{ result }}</p>
         <a href="http://18.182.63.40:8080">to KDDI</a>
 </body>
 </html>

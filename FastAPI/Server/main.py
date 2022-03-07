@@ -9,7 +9,7 @@ async def root():
 
 @app.get("/api/v1/plus/{num_1}/{num_2}")
 async def plus(num_1: int, num_2: int):
-    result = int(num_1) + int(num_2)
+    result = num_1 + num_2
     return result
 
 @app.get("/")

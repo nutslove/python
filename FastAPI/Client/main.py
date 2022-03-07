@@ -1,6 +1,6 @@
 from enum import Enum
 import httpx
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -35,6 +35,12 @@ async def model(model_name: ModelName): #上のModelNameクラスの下の"="の
 
 @app.get("/plus", response_class=HTMLResponse)
 async def plus(request: Request):
-    result = httpx.get('http://172.31.32.49:8080/api/v1/plus/50/41')
+    result = "計算してください"
+    return templates.TemplateResponse("root.html",{"request": request, "result": result})
+
+@app.post("/plus", response_class=HTMLResponse)
+async def plus(request: Request, num1: int = Form(...), num2: int = Form(...)):
+    url = 'http://172.31.32.49:8080/api/v1/plus/' + str(num1) + '/' + str(num2)
+    result = httpx.get(url)
     result = result.text
     return templates.TemplateResponse("root.html",{"request": request, "result": result})
