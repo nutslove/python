@@ -35,12 +35,17 @@ async def model(model_name: ModelName): #上のModelNameクラスの下の"="の
 
 @app.get("/plus", response_class=HTMLResponse)
 async def plus(request: Request):
-    result = "計算してください"
-    return templates.TemplateResponse("root.html",{"request": request, "result": result})
+    title_url = f"http://172.31.32.49:8080/api/v1/title?title=What Should I do?"
+    title = httpx.get(title_url)
+    result = "数字を入力して下さい"
+    return templates.TemplateResponse("root.html",{"request": request, "result": result, "title": title.text})
 
 @app.post("/plus", response_class=HTMLResponse)
 async def plus(request: Request, num1: int = Form(...), num2: int = Form(...)):
-    url = 'http://172.31.32.49:8080/api/v1/plus/' + str(num1) + '/' + str(num2)
+    url = f'http://172.31.32.49:8080/api/v1/plus?num_1={num1}&num_2={num2}'
     result = httpx.get(url)
-    result = result.text
-    return templates.TemplateResponse("root.html",{"request": request, "result": result})
+
+    title_url = f"http://172.31.32.49:8080/api/v1/title?title=Try Hard"
+    title = httpx.get(title_url)
+
+    return templates.TemplateResponse("root.html",{"request": request, "result": result.text, "title": title.text})
