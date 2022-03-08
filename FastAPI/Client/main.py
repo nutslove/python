@@ -1,5 +1,6 @@
 from enum import Enum
 import httpx
+import json
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -35,17 +36,22 @@ async def model(model_name: ModelName): #上のModelNameクラスの下の"="の
 
 @app.get("/plus", response_class=HTMLResponse)
 async def plus(request: Request):
-    title_url = f"http://172.31.32.49:8080/api/v1/title?title=What Should I do?"
+#    title_url = "http://172.31.32.49:8080/api/v1/title?title=What Should I do?"
+    title_url = "http://172.31.32.49:8080/api/v1/title"
     title = httpx.get(title_url)
+    jsondata = json.loads(title.text)
+    title = jsondata['title']
     result = "数字を入力して下さい"
-    return templates.TemplateResponse("root.html",{"request": request, "result": result, "title": title.text})
+    return templates.TemplateResponse("root.html",{"request": request, "result": result, "title": title})
 
 @app.post("/plus", response_class=HTMLResponse)
 async def plus(request: Request, num1: int = Form(...), num2: int = Form(...)):
     url = f'http://172.31.32.49:8080/api/v1/plus?num_1={num1}&num_2={num2}'
     result = httpx.get(url)
 
-    title_url = f"http://172.31.32.49:8080/api/v1/title?title=Try Hard"
+    title_url = "http://172.31.32.49:8080/api/v1/title"
     title = httpx.get(title_url)
+    jsondata = json.loads(title.text)
+    title = jsondata['title']
 
-    return templates.TemplateResponse("root.html",{"request": request, "result": result.text, "title": title.text})
+    return templates.TemplateResponse("root.html",{"request": request, "result": result.text, "title": title})

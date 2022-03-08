@@ -15,8 +15,10 @@ async def plus(num_1: int = 10, num_2: int = 90):
     return result
 
 @app.get("/api/v1/title")
-async def plus(title: Optional[str] = None):
-    return title
+async def title(title: Optional[str] = None, title_color: Optional[str] = None):
+    title = "Version 1"
+    title_color = "green"
+    return {"title": title, "title_color": title_color}
 
 @app.get("/")
 async def root():

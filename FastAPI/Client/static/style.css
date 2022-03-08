@@ -1,6 +1,7 @@
 body {
-    color:rgb(0, 128, 21);
+    color:green;
     font-size:16pt;
+    background:linear-gradient(#f8e474, #ff7878);
 }
 h1 {
     color:black;
