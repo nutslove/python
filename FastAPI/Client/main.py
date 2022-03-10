@@ -2,9 +2,10 @@ from enum import Enum
 import httpx
 import json
 from fastapi import FastAPI, Request, Form
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse ## Requestに対してResponseとしてHTMLを返す
+from fastapi.staticfiles import StaticFiles # 
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import FileResponse ## Requestに対してResponseとしてファイルを返す # aiofilesのインストールが必要(pip3 install aiofiles)
 
 class ModelName(str, Enum):
     Lee = "Joonki"
@@ -23,6 +24,10 @@ async def root():
     print(type(return_message))
     return "ID: " + return_message.text
 
+@app.get("/photo")
+def photo():
+    return FileResponse("static/BrooklynBridge-1.jpg") # このmain.pyがあるディレクトリから相対パス
+
 @app.get("/param_int/{item_id}")
 async def read_item(item_id: int): # FastAPIは自動でValidationチェックまでしてくれて、pythonでは型の強制力はなかった(int 以外の型が入ってもエラーにならない)気がするが、FastAPIの場合実際int以 外の型の値が入るとエラーになる。
     return {"int_item_id": item_id}
@@ -39,10 +44,14 @@ async def plus(request: Request):
 #    title_url = "http://172.31.32.49:8080/api/v1/title?title=What Should I do?"
     title_url = "http://172.31.32.49:8080/api/v1/title"
     title = httpx.get(title_url)
+    # print("Header: ", title.headers) # httpx.getで取得した「オブジェクト.headers」にHTTPヘッダの情報が入っている
+    # print("URL: ", title.url) # httpx.getで取得した「オブジェクト.url」にURL情報が入ってる
+    # print("Status Code: ", title) # httpx.getで取得したオブジェクトにはステータスコードが入ってる
     jsondata = json.loads(title.text)
     title = jsondata['title']
+    calculation = jsondata['calculation']
     result = "数字を入力して下さい"
-    return templates.TemplateResponse("root.html",{"request": request, "result": result, "title": title})
+    return templates.TemplateResponse("root.html",{"request": request, "result": result, "title": title, "calculation": calculation})
 
 @app.post("/plus", response_class=HTMLResponse)
 async def plus(request: Request, num1: int = Form(...), num2: int = Form(...)):
@@ -53,5 +62,6 @@ async def plus(request: Request, num1: int = Form(...), num2: int = Form(...)):
     title = httpx.get(title_url)
     jsondata = json.loads(title.text)
     title = jsondata['title']
+    calculation = jsondata['calculation']
 
-    return templates.TemplateResponse("root.html",{"request": request, "result": result.text, "title": title})
+    return templates.TemplateResponse("root.html",{"request": request, "result": result.text, "title": title, "calculation": calculation})

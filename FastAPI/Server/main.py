@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Response
 from fastapi.responses import HTMLResponse
+from fastapi.responses import FileResponse
 from typing import Optional
 
 app = FastAPI()
@@ -16,9 +17,9 @@ async def plus(num_1: int = 10, num_2: int = 90):
 
 @app.get("/api/v1/title")
 async def title(title: Optional[str] = None, title_color: Optional[str] = None):
-    title = "Version 1"
-    title_color = "green"
-    return {"title": title, "title_color": title_color}
+    title = "猫と足し算の部屋"
+    calculation = "足し算"
+    return {"title": title, "calculation": calculation}
 
 @app.get("/")
 async def root():

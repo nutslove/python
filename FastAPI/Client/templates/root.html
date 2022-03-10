@@ -6,13 +6,13 @@
 </head>
 <body>
         <h1>{{title | default('FastAPI Welcome Page')}}</h1>
-        <!-- <img src="{{ url_for('static', path='/BrooklynBridge-1.jpg') }}", alt="My image"> -->
+        <img src="{{ url_for('static', path='/BrooklynBridge-1.jpg') }}", alt="My image">
         <form method="post">
                 <label for="num1">数字1: </label>
                 <input type="number" name="num1" value="" required/><br>
                 <label for="num2">数字2: </label>
                 <input type="number" name="num2" required><br>
-                <input type="submit" value="足し算">
+                <input type="submit" value="{{ calculation }}">
         </form>
         <p>計算結果 = {{ result }}</p>
 </body>
