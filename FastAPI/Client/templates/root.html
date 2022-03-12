@@ -1,5 +1,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
 <head>
+        <style type="text/css">
+                /* こういうふうにHTML内に直接CSSを書くこともできるし、下のようにCSSファイルを別出してそこに書くこともできる 
+                .container {
+                        width: 100%;
+                        height: auto;
+                        background-color: rgb(255, 185, 153);
+                        margin-right: auto;
+                        margin-left: auto;
+                        color: #066;
+                }
+                */
+        </style>
         <meta charset="utf-8">
         <title>{{title | default('FastAPI Welcome Page')}}</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/style.css') }}">
