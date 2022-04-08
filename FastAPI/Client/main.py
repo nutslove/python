@@ -1,6 +1,8 @@
 from enum import Enum
 import httpx
 import json
+from io import BytesIO
+from PIL import Image
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse ## Requestに対してResponseとしてHTMLを返す
 from fastapi.staticfiles import StaticFiles # 
@@ -23,10 +25,6 @@ async def root():
     print(return_message.text) # 中身を取り出したいときは「.text」を付ける必要があるっぽい
     print(type(return_message))
     return "ID: " + return_message.text
-
-@app.get("/photo")
-def photo():
-    return FileResponse("static/BrooklynBridge-1.jpg") # このmain.pyがあるディレクトリから相対パス
 
 @app.get("/param_int/{item_id}")
 async def read_item(item_id: int): # FastAPIは自動でValidationチェックまでしてくれて、pythonでは型の強制力はなかった(int 以外の型が入ってもエラーにならない)気がするが、FastAPIの場合実際int以 外の型の値が入るとエラーになる。
@@ -51,6 +49,10 @@ async def plus(request: Request):
     title = jsondata['title']
     calculation = jsondata['calculation']
     result = "数字を入力して下さい"
+    image_url = "http://172.31.32.49:8080/api/v1/image"
+    image = httpx.get(image_url)
+    image = Image.open(BytesIO(image.content))
+    image.save("static/animal.jpg")
     return templates.TemplateResponse("root.html",{"request": request, "result": result, "title": title, "calculation": calculation})
 
 @app.post("/plus", response_class=HTMLResponse)
