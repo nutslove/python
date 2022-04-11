@@ -5,7 +5,15 @@ from sqlalchemy import Column
 
 class Cat_Data(Base): ## class名は任意
     __tablename__ = 'cats' ## tablenameも任意
-    catname = Column(String, primary_key=True, index=True)
+    name = Column(String, primary_key=True, index=True)
+    breed = Column(String)
+    sex = Column(String)
+    age = Column(Integer)
+    owner = Column(String)
+
+class Dog_Data(Base): ## class名は任意
+    __tablename__ = 'dogs' ## tablenameも任意
+    name = Column(String, primary_key=True, index=True)
     breed = Column(String)
     sex = Column(String)
     age = Column(Integer)
