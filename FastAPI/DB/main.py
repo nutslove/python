@@ -46,10 +46,60 @@ def delete_animal(name: str,db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail=f"Cat[{name}] not found")
     return crud.delete_cat(db, cat_name=name)
 
-## putの部分要修正。とりあえず追記した感じ
-# @app.put("/cat/{name}", response_model=schemas.AnimalBase)
-# def update_animal(name: str,db: Session = Depends(get_db)):
-#     cat = crud.get_cat(db, cat_name=name)
-#     if cat is None:
-#         raise HTTPException(status_code=404, detail=f"Cat[{name}] not found")
-#     return cat
+## 一部のデータを修正するためにputよりpatchが良い？下記URL参照
+# https://fastapi.tiangolo.com/tutorial/body-updates/?h=+par#partial-updates-with-patch
+@app.patch("/cat/{name}", response_model=schemas.AnimalBase)
+def update_animal(name: str, breed: str, sex: str, age: int, owner: str, cat: schemas.AnimalBase, db: Session = Depends(get_db)):
+    cat = crud.get_cat(db, cat_name=name)
+    if cat is None:
+        raise HTTPException(status_code=404, detail=f"Cat[{name}] not fount")
+    cat_info = {
+        "name": name,
+        "breed": breed,
+        "sex": sex,
+        "age": age,
+        "owner": owner
+    }
+    return crud.update_cat(db=db, cat=cat_info)
+
+@app.post("/dog/{name}", response_model=schemas.AnimalBase)
+def create_animal(name: str, breed: str, sex: str, age: int, owner: str, dog: schemas.AnimalBase, db: Session = Depends(get_db)):
+    dog = crud.get_dog(db, dog_name=name)
+    if dog:
+        raise HTTPException(status_code=400, detail=f"Dog[{name}] already registered")
+    dog_info = {
+        "name": name,
+        "breed": breed,
+        "sex": sex,
+        "age": age,
+        "owner": owner
+    }
+    return crud.create_dog(db=db, dog=dog_info)
+
+@app.get("/dog/{name}", response_model=schemas.AnimalBase)
+def get_animal(name: str,db: Session = Depends(get_db)):
+    dog = crud.get_dog(db, dog_name=name)
+    if dog is None:
+        raise HTTPException(status_code=404, detail=f"Dog[{name}] not found")
+    return dog
+
+@app.delete("/dog/{name}", response_model=schemas.AnimalBase)
+def delete_animal(name: str,db: Session = Depends(get_db)):
+    dog = crud.get_dog(db, dog_name=name)
+    if dog is None:
+        raise HTTPException(status_code=404, detail=f"Dog[{name}] not found")
+    return crud.delete_dog(db, dog_name=name)
+
+@app.patch("/dog/{name}", response_model=schemas.AnimalBase)
+def update_animal(name: str, breed: str, sex: str, age: int, owner: str, dog: schemas.AnimalBase, db: Session = Depends(get_db)):
+    dog = crud.get_dog(db, dog_name=name)
+    if dog is None:
+        raise HTTPException(status_code=404, detail=f"Dog[{name}] not fount")
+    dog_info = {
+        "name": name,
+        "breed": breed,
+        "sex": sex,
+        "age": age,
+        "owner": owner
+    }
+    return crud.update_dog(db=db, dog=dog_info)

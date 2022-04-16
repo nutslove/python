@@ -18,7 +18,38 @@
 </head>
 <body>
         <h1>{{title | default('FastAPI Welcome Page')}}</h1>
-        <img src="{{ url_for('static', path='/BrooklynBridge-1.jpg') }}", alt="My image">
+        <table border="0" width=80% align="center">
+        <tr>
+        <td>
+        <div class="frame">
+                <img src="{{ url_for('static', path='/animal.jpg') }}", alt="My image">
+        </div>
+        </td>
+        <td valign="top">
+        <table border="1" width=45% align="center">
+                <tr>
+                        <th>名前</th>
+                        <th>{{ name }}</th>
+                </tr>
+                <tr>
+                        <th>種類</th>
+                        <th>{{ breed }}</th>
+                </tr>
+                <tr>
+                        <th>性別</th>
+                        <th>{{ sex }}</th>
+                </tr>
+                <tr>
+                        <th>年齢</th>
+                        <th>{{ age }}</th>
+                </tr>
+                <tr>
+                        <th>飼主</th>
+                        <th>{{ owner }}</th>
+                </tr>
+        </tr>
+        </table>
+        </table>
         <form method="post">
                 <label for="num1">数字1: </label>
                 <input type="number" name="num1" value="" required/><br>
