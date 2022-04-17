@@ -49,7 +49,6 @@ async def plus(request: Request):
     title = jsondata['title']
     calculation = jsondata['calculation']
     result = "数字を入力して下さい"
-    # image_url = "http://172.31.32.49:8080/api/v1/image"
     animal_type = json.loads(results.text)[2]
     image_url = "http://calculate.default.svc.cluster.local/api/v1/image/" + animal_type
     image = httpx.get(image_url)
