@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: calculate
+  name: calculate-v1
   labels:
     app: calculate
 spec:
@@ -18,19 +18,4 @@ spec:
       containers:
       - name: calculate
         image: nutslove/fastapi-calculate:v1
-        # image: nutslove/fastapi-calculate:v2
         imagePullPolicy: Always
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: calculate
-spec:
-  selector:
-    app: calculate
-  type: NodePort
-  ports:
-  - name: http
-    protocol: TCP
-    port: 80
-    nodePort: 30001

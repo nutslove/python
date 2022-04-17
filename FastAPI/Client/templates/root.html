@@ -22,7 +22,11 @@
         <tr>
         <td>
         <div class="frame">
-                <img src="{{ url_for('static', path='/animal.jpg') }}", alt="My image">
+                {% if animal_type == "cat" %}
+                <img src="{{ url_for('static', path='/cat.jpg') }}", alt="My image">
+                {% elif animal_type == "dog" %}
+                <img src="{{ url_for('static', path='/dog.jpg') }}", alt="My image">
+                {% endif %}
         </div>
         </td>
         <td valign="top">
