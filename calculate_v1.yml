@@ -14,8 +14,23 @@ spec:
     metadata:
       labels:
         app: calculate
+        version: cat-plus
     spec:
       containers:
       - name: calculate
         image: nutslove/fastapi-calculate:v1
         imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calculate
+spec:
+  selector:
+    app: calculate
+  type: NodePort
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    nodePort: 30001

@@ -1,0 +1,34 @@
+---
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: vs-for-canary-release
+  namespace: default
+spec:
+  hosts:
+    - calculate.default.svc.cluster.local # ここは "*" にするとエラーになる
+  http:
+    - route:
+        - destination:
+            host: calculate.default.svc.cluster.local # host項目は必須. subsetだけだとエラーになる
+            subset: cat-with-plus
+          weight: 90
+        - destination:
+            host: calculate.default.svc.cluster.local
+            subset: dog-with-multi
+          weight: 10
+---
+kind: DestinationRule
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: ds-for-canary-release
+  namespace: default
+spec:
+  host: calculate.default.svc.cluster.local
+  subsets:
+    - labels:
+        version: cat-plus
+      name: cat-with-plus
+    - labels:
+        version: dog-multi
+      name: dog-with-multi
