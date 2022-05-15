@@ -27,7 +27,6 @@ def plus(operator:str = "", num_1: int = 10, num_2: int = 90): ## parameterã¨ã
 
 @app.get("/api/v1/image/{animal}")
 def image_get(animal: str):
-    time.sleep(60)
     # image_url = "http://172.31.43.217:8080/api/v1/cat"
     image_url = "http://image.default.svc.cluster.local/api/v1/" + animal
     image = httpx.get(image_url)

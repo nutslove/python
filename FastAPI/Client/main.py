@@ -71,7 +71,7 @@ async def plus(request: Request, num1: int = Form(...), num2: int = Form(...)):
     elif animal_type == "dog":
         operator = "multiplication"
     url = f'http://calculate.default.svc.cluster.local/api/v1/calculate?operator={operator}&num_1={num1}&num_2={num2}'
-    results = httpx.get(url)
+    results = httpx.get(url, timeout=None)
 
     result = json.loads(results.text)[0]
 

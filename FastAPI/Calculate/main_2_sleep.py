@@ -11,6 +11,7 @@ app = FastAPI()
 
 @app.get("/api/v1/calculate")
 def plus(operator:str = "", num_1: int = 10, num_2: int = 90): ## parameterとして定義したもの(ex. operator)は初期値を定義しておく必要がある。(でないとエラーになる)
+    time.sleep(20)
     if operator == "addition":
         result = num_1 + num_2
     elif operator == "multiplication":
@@ -18,12 +19,12 @@ def plus(operator:str = "", num_1: int = 10, num_2: int = 90): ## parameterと�
     else:
         result = 77
 
-    title = "猫と足し算の部屋"
-    calculation = "足し算"
+    title = "犬と掛け算の部屋"
+    calculation = "掛け算"
 
-    db_url = "http://db.default.svc.cluster.local/cat/Ruka"
+    db_url = "http://db.default.svc.cluster.local/dog/BauWow"
     db = httpx.get(db_url)
-    return result, {"title": title, "calculation": calculation}, "cat", db.text
+    return result, {"title": title, "calculation": calculation}, "dog", db.text
 
 @app.get("/api/v1/image/{animal}")
 def image_get(animal: str):
