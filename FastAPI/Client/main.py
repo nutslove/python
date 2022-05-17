@@ -40,7 +40,7 @@ async def plus(request: Request):
     global owner
 
     url = "http://calculate.default.svc.cluster.local/api/v1/calculate"
-    results = httpx.get(url)
+    results = httpx.get(url, timeout=None)
     # print("Header: ", title.headers) # httpx.getで取得した「オブジェクト.headers」にHTTPヘッダの情報が入っている
     # print("URL: ", title.url) # httpx.getで取得した「オブジェクト.url」にURL情報が入ってる
     # print("Status Code: ", title) # httpx.getで取得したオブジェクトにはステータスコードが入ってる

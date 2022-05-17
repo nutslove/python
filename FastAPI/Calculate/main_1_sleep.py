@@ -11,10 +11,11 @@ app = FastAPI()
 
 @app.get("/api/v1/calculate")
 def plus(operator:str = "", num_1: int = 10, num_2: int = 90): ## parameterとして定義したもの(ex. operator)は初期値を定義しておく必要がある。(でないとエラーになる)
-    time.sleep(20)
     if operator == "addition":
+        time.sleep(20)
         result = num_1 + num_2
     elif operator == "multiplication":
+        time.sleep(20)
         result = num_1 * num_2
     else:
         result = 77
