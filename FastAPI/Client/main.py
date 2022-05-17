@@ -71,8 +71,19 @@ async def plus(request: Request, num1: int = Form(...), num2: int = Form(...)):
     elif animal_type == "dog":
         operator = "multiplication"
     url = f'http://calculate.default.svc.cluster.local/api/v1/calculate?operator={operator}&num_1={num1}&num_2={num2}'
-    results = httpx.get(url, timeout=None)
+    try:
+        results = httpx.get(url, timeout=None)
+    except Exception as e:
+        print(e)
 
-    result = json.loads(results.text)[0]
+    print("==================================")
+    print(results)
+    print(results.text)
+    print("==================================")
+
+    if "504 Gateway Timeout" in str(results):
+        result = "Timeout Error"
+    else:
+        result = json.loads(results.text)[0]
 
     return templates.TemplateResponse("root.html",{"request": request, "result": result, "title": title, "calculation": calculation, "animal_type": animal_type, "name": name, "breed": breed, "sex": sex, "age": age, "owner": owner})

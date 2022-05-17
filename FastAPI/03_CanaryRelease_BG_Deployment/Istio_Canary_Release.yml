@@ -12,11 +12,11 @@ spec:
         - destination:
             host: calculate.default.svc.cluster.local # host項目は必須. subsetだけだとエラーになる
             subset: cat-with-plus
-          weight: 100
+          weight: 90
         - destination:
             host: calculate.default.svc.cluster.local
             subset: dog-with-multi
-          weight: 0
+          weight: 10
 ---
 kind: DestinationRule
 apiVersion: networking.istio.io/v1alpha3
