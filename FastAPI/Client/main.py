@@ -83,6 +83,8 @@ async def plus(request: Request, num1: int = Form(...), num2: int = Form(...)):
 
     if "504 Gateway Timeout" in str(results):
         result = "Timeout Error"
+    elif "429 Too Many Requests" in str(results):
+        result = "Too Many Requests"
     else:
         result = json.loads(results.text)[0]
 
