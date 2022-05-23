@@ -47,30 +47,29 @@ async def plus(request: Request):
     # cal_result = json.loads(results.text)[0] # getの時はcal_resultは使わない
 
     if "504 Gateway Timeout" in str(results):
-        title = "Timeout Error"
-        calculation = "???"
+        result = "Timeout Error"
+        return templates.TemplateResponse("error.html",{"result": result}) 
     elif "429 Too Many Requests" in str(results):
-        title = "Too Many Requests"
-        calculation = "???"
+        result = "Too Many Requests"
+        return templates.TemplateResponse("error.html",{"result": result})
     else:
         jsondata = json.loads(results.text)[1]
         title = jsondata['title']
         calculation = jsondata['calculation']
+        result = "数字を入力して下さい"
+        animal_type = json.loads(results.text)[2]
+        image_url = "http://calculate.default.svc.cluster.local/api/v1/image/" + animal_type
+        image = httpx.get(image_url)
+        image = Image.open(BytesIO(image.content))
+        image.save(f"static/{animal_type}.jpg")
+        animal = json.loads(results.text)[3]
+        name = json.loads(animal)['name']
+        breed = json.loads(animal)['breed']
+        sex = json.loads(animal)['sex']
+        age = json.loads(animal)['age']
+        owner = json.loads(animal)['owner']
 
-    result = "数字を入力して下さい"
-    animal_type = json.loads(results.text)[2]
-    image_url = "http://calculate.default.svc.cluster.local/api/v1/image/" + animal_type
-    image = httpx.get(image_url)
-    image = Image.open(BytesIO(image.content))
-    image.save(f"static/{animal_type}.jpg")
-    animal = json.loads(results.text)[3]
-    name = json.loads(animal)['name']
-    breed = json.loads(animal)['breed']
-    sex = json.loads(animal)['sex']
-    age = json.loads(animal)['age']
-    owner = json.loads(animal)['owner']
-
-    return templates.TemplateResponse("root.html",{"request": request, "result": result, "title": title, "calculation": calculation, "animal_type": animal_type, "name": name, "breed": breed, "sex": sex, "age": age, "owner": owner})
+        return templates.TemplateResponse("root.html",{"request": request, "result": result, "title": title, "calculation": calculation, "animal_type": animal_type, "name": name, "breed": breed, "sex": sex, "age": age, "owner": owner})
 
 @app.post("/", response_class=HTMLResponse)
 async def plus(request: Request, num1: int = Form(...), num2: int = Form(...)):
