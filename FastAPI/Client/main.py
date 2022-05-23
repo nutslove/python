@@ -45,9 +45,18 @@ async def plus(request: Request):
     # print("URL: ", title.url) # httpx.getで取得した「オブジェクト.url」にURL情報が入ってる
     # print("Status Code: ", title) # httpx.getで取得したオブジェクトにはステータスコードが入ってる
     # cal_result = json.loads(results.text)[0] # getの時はcal_resultは使わない
-    jsondata = json.loads(results.text)[1]
-    title = jsondata['title']
-    calculation = jsondata['calculation']
+
+    if "504 Gateway Timeout" in str(results):
+        title = "Timeout Error"
+        calculation = "???"
+    elif "429 Too Many Requests" in str(results):
+        title = "Too Many Requests"
+        calculation = "???"
+    else:
+        jsondata = json.loads(results.text)[1]
+        title = jsondata['title']
+        calculation = jsondata['calculation']
+
     result = "数字を入力して下さい"
     animal_type = json.loads(results.text)[2]
     image_url = "http://calculate.default.svc.cluster.local/api/v1/image/" + animal_type
