@@ -40,11 +40,20 @@ async def plus(request: Request):
     global owner
 
     url = "http://calculate.default.svc.cluster.local/api/v1/calculate"
-    results = httpx.get(url, timeout=None)
+    try:
+        results = httpx.get(url, timeout=None)
+    except Exception as e:
+        print(e)
+
     # print("Header: ", title.headers) # httpx.getで取得した「オブジェクト.headers」にHTTPヘッダの情報が入っている
     # print("URL: ", title.url) # httpx.getで取得した「オブジェクト.url」にURL情報が入ってる
     # print("Status Code: ", title) # httpx.getで取得したオブジェクトにはステータスコードが入ってる
     # cal_result = json.loads(results.text)[0] # getの時はcal_resultは使わない
+
+    print("==================================")
+    print(results)
+    print(results.text)
+    print("==================================")
 
     if "504 Gateway Timeout" in str(results):
         result = "Timeout Error"
