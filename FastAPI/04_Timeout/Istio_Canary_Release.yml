@@ -12,11 +12,11 @@ spec:
         - destination:
             host: calculate.default.svc.cluster.local # host項目は必須. subsetだけだとエラーになる
             subset: cat-with-plus
-          weight: 90
+          weight: 50
         - destination:
             host: calculate.default.svc.cluster.local
             subset: dog-with-multi
-          weight: 10
+          weight: 50
       timeout: 2s
 ---
 kind: DestinationRule

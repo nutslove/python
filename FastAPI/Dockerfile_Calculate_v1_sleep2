@@ -5,4 +5,4 @@ EXPOSE 80
 RUN mkdir -p /etc/fastapi/app
 COPY Calculate/ /etc/fastapi/app
 WORKDIR /etc/fastapi/app
-CMD ["uvicorn", "main_2_5xx:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "main_1_sleep2:app", "--host", "0.0.0.0", "--port", "80"]

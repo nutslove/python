@@ -6,6 +6,7 @@ spec:
   host: calculate.default.svc.cluster.local
   trafficPolicy:
     outlierDetection:
-      consecutive5xxErrors: 5
-      interval: 10s
+      consecutive5xxErrors: 10
+      consecutiveGatewayErrors: 5
+      interval: 30s
       baseEjectionTime: 10s
