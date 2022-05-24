@@ -1,0 +1,26 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: calculate-cb-policy
+spec:
+  host: calculate.default.svc.cluster.local
+  trafficPolicy:
+    outlierDetection:
+      consecutiveGatewayErrors: 3
+      interval: 30s
+      baseEjectionTime: 10s
+---
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: vs-for-canary-release
+  namespace: default
+spec:
+  hosts:
+    - calculate.default.svc.cluster.local
+  http:
+    - route:
+        - destination:
+            host: calculate.default.svc.cluster.local
+      timeout: 2s
