@@ -61,8 +61,7 @@ async def plus(request: Request):
     elif "429 Too Many Requests" in str(results):
         result = "Too Many Requests"
         return templates.TemplateResponse("error.html",{"request": request, "result": result})
-    # elif "200 OK" in str(results):
-    else:
+    elif "200 OK" in str(results):
         jsondata = json.loads(results.text)[1]
         title = jsondata['title']
         calculation = jsondata['calculation']
@@ -79,9 +78,9 @@ async def plus(request: Request):
         age = json.loads(animal)['age']
         owner = json.loads(animal)['owner']
         return templates.TemplateResponse("root.html",{"request": request, "result": result, "title": title, "calculation": calculation, "animal_type": animal_type, "name": name, "breed": breed, "sex": sex, "age": age, "owner": owner})
-    # else:
-    #     result = str(results)
-    #     return templates.TemplateResponse("error.html",{"request": request, "result": result})
+    else:
+        result = str(results)
+        return templates.TemplateResponse("error.html",{"request": request, "result": result})
 
 @app.post("/", response_class=HTMLResponse)
 async def plus(request: Request, num1: int = Form(...), num2: int = Form(...)):

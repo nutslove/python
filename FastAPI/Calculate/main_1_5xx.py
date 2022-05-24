@@ -9,7 +9,7 @@ import time
 
 app = FastAPI()
 
-@app.get("/api/v1/calculate", status_code=503)
+@app.get("/api/v1/calculate")
 def plus(operator:str = "", num_1: int = 10, num_2: int = 90): ## parameterとして定義したもの(ex. operator)は初期値を定義しておく必要がある。(でないとエラーになる)
     if operator == "addition":
         result = num_1 + num_2
@@ -21,7 +21,7 @@ def plus(operator:str = "", num_1: int = 10, num_2: int = 90): ## parameterと�
     title = "猫と足し算の部屋"
     calculation = "足し算"
 
-    db_url = "http://db.default.svc.cluster.local/cat/Ruka"
+    db_url = "http://db.default.svc.cluster.local/cat/Rukaaaaaaaaaaaaaaaaaaaaaaaa"
     db = httpx.get(db_url)
     return result, {"title": title, "calculation": calculation}, "cat", db.text
 
