@@ -18,5 +18,5 @@ spec:
     spec:
       containers:
       - name: calculate
-        image: nutslove/fastapi-calculate-sleep:v1
+        image: nutslove/fastapi-calculate-5xx:v1
         imagePullPolicy: Always

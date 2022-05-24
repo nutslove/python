@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: calculate-v1
+  name: calculate-v2
   labels:
     app: calculate
 spec:
@@ -14,9 +14,9 @@ spec:
     metadata:
       labels:
         app: calculate
-        version: cat-plus
+        version: dog-multi
     spec:
       containers:
       - name: calculate
-        image: nutslove/fastapi-calculate-sleep:v1
+        image: nutslove/fastapi-calculate-5xx:v2
         imagePullPolicy: Always
