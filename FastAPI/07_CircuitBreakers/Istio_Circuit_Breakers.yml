@@ -23,4 +23,4 @@ spec:
     - route:
         - destination:
             host: calculate.default.svc.cluster.local
-      timeout: 2s
+      timeout: 1s
