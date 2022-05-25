@@ -9,7 +9,7 @@ spec:
     outlierDetection:
       consecutiveGatewayErrors: 3
       interval: 30s
-      baseEjectionTime: 10s
+      baseEjectionTime: 5s
 ---
 kind: VirtualService
 apiVersion: networking.istio.io/v1alpha3
