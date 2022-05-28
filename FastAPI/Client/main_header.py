@@ -3,6 +3,7 @@ import httpx
 import json
 from io import BytesIO
 from PIL import Image
+from typing import Optional
 from fastapi import FastAPI, Request, Form, Header
 from fastapi.responses import HTMLResponse ## Requestに対してResponseとしてHTMLを返す
 from fastapi.staticfiles import StaticFiles # 
@@ -50,17 +51,27 @@ async def plus(
 
     url = "http://calculate.default.svc.cluster.local/api/v1/calculate"
     try:
-        with httpx.Client() as client:
-            headers = {
-                'x-request-id': x_request_id,
-                'x-b3-traceid': x_b3_traceid,
-                'x-b3-spanid': x_b3_spanid,
-                'x-b3-parentspanid': x_b3_parentspanid,
-                'x-b3-sampled': x_b3_sampled,
-                'x-b3-flags': x_b3_flags,
-                'x-ot-span-context': x_ot_span_context
-                }
-            results = client.get(url, timeout=None, headers=headers)
+        # with httpx.Client() as client:
+        #     headers = {
+        #         'x-request-id': x_request_id,
+        #         'x-b3-traceid': x_b3_traceid,
+        #         'x-b3-spanid': x_b3_spanid,
+        #         'x-b3-parentspanid': x_b3_parentspanid,
+        #         'x-b3-sampled': x_b3_sampled,
+        #         'x-b3-flags': x_b3_flags,
+        #         'x-ot-span-context': x_ot_span_context
+        #         }
+        client = httpx.Client()
+        headers = {
+            'x-request-id': x_request_id,
+            'x-b3-traceid': x_b3_traceid,
+            'x-b3-spanid': x_b3_spanid,
+            'x-b3-parentspanid': x_b3_parentspanid,
+            'x-b3-sampled': x_b3_sampled,
+            'x-b3-flags': x_b3_flags,
+            'x-ot-span-context': x_ot_span_context
+            }
+        results = client.get(url, timeout=None, headers=headers)
     except Exception as e:
         print(e)
 
@@ -122,17 +133,27 @@ async def plus(
         operator = "multiplication"
     url = f'http://calculate.default.svc.cluster.local/api/v1/calculate?operator={operator}&num_1={num1}&num_2={num2}'
     try:
-        with httpx.Client() as client:
-            headers = {
-                'x-request-id': x_request_id,
-                'x-b3-traceid': x_b3_traceid,
-                'x-b3-spanid': x_b3_spanid,
-                'x-b3-parentspanid': x_b3_parentspanid,
-                'x-b3-sampled': x_b3_sampled,
-                'x-b3-flags': x_b3_flags,
-                'x-ot-span-context': x_ot_span_context
-                }
-            results = client.get(url, timeout=None, headers=headers)
+        # with httpx.Client() as client:
+        #     headers = {
+        #         'x-request-id': x_request_id,
+        #         'x-b3-traceid': x_b3_traceid,
+        #         'x-b3-spanid': x_b3_spanid,
+        #         'x-b3-parentspanid': x_b3_parentspanid,
+        #         'x-b3-sampled': x_b3_sampled,
+        #         'x-b3-flags': x_b3_flags,
+        #         'x-ot-span-context': x_ot_span_context
+        #         }
+        client = httpx.Client()
+        headers = {
+            'x-request-id': x_request_id,
+            'x-b3-traceid': x_b3_traceid,
+            'x-b3-spanid': x_b3_spanid,
+            'x-b3-parentspanid': x_b3_parentspanid,
+            'x-b3-sampled': x_b3_sampled,
+            'x-b3-flags': x_b3_flags,
+            'x-ot-span-context': x_ot_span_context
+            }
+        results = client.get(url, timeout=None, headers=headers)
     except Exception as e:
         print(e)
 

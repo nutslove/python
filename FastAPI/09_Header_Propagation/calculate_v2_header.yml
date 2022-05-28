@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: calculate-v1
+  name: calculate-v2
   labels:
     app: calculate
 spec:

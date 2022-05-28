@@ -34,17 +34,27 @@ def plus(
     calculation = "足し算"
 
     db_url = "http://db.default.svc.cluster.local/cat/Ruka"
-    with httpx.Client() as client:
-        headers = {
-            'x-request-id': x_request_id,
-            'x-b3-traceid': x_b3_traceid,
-            'x-b3-spanid': x_b3_spanid,
-            'x-b3-parentspanid': x_b3_parentspanid,
-            'x-b3-sampled': x_b3_sampled,
-            'x-b3-flags': x_b3_flags,
-            'x-ot-span-context': x_ot_span_context
+    # with httpx.Client() as client:
+    #     headers = {
+    #         'x-request-id': x_request_id,
+    #         'x-b3-traceid': x_b3_traceid,
+    #         'x-b3-spanid': x_b3_spanid,
+    #         'x-b3-parentspanid': x_b3_parentspanid,
+    #         'x-b3-sampled': x_b3_sampled,
+    #         'x-b3-flags': x_b3_flags,
+    #         'x-ot-span-context': x_ot_span_context
+    #     }
+    client = httpx.Client()
+    headers = {
+        'x-request-id': x_request_id,
+        'x-b3-traceid': x_b3_traceid,
+        'x-b3-spanid': x_b3_spanid,
+        'x-b3-parentspanid': x_b3_parentspanid,
+        'x-b3-sampled': x_b3_sampled,
+        'x-b3-flags': x_b3_flags,
+        'x-ot-span-context': x_ot_span_context
         }
-        db = client.get(db_url, headers=headers)
+    db = client.get(db_url, headers=headers)
     return result, {"title": title, "calculation": calculation}, "cat", db.text
 
 @app.get("/api/v1/image/{animal}")
@@ -60,17 +70,27 @@ def image_get(
     ):
     # image_url = "http://172.31.43.217:8080/api/v1/cat"
     image_url = "http://image.default.svc.cluster.local/api/v1/" + animal
-    with httpx.Client() as client:
-        headers = {
-            'x-request-id': x_request_id,
-            'x-b3-traceid': x_b3_traceid,
-            'x-b3-spanid': x_b3_spanid,
-            'x-b3-parentspanid': x_b3_parentspanid,
-            'x-b3-sampled': x_b3_sampled,
-            'x-b3-flags': x_b3_flags,
-            'x-ot-span-context': x_ot_span_context
+    # with httpx.Client() as client:
+    #     headers = {
+    #         'x-request-id': x_request_id,
+    #         'x-b3-traceid': x_b3_traceid,
+    #         'x-b3-spanid': x_b3_spanid,
+    #         'x-b3-parentspanid': x_b3_parentspanid,
+    #         'x-b3-sampled': x_b3_sampled,
+    #         'x-b3-flags': x_b3_flags,
+    #         'x-ot-span-context': x_ot_span_context
+    #     }
+    client = httpx.Client()
+    headers = {
+        'x-request-id': x_request_id,
+        'x-b3-traceid': x_b3_traceid,
+        'x-b3-spanid': x_b3_spanid,
+        'x-b3-parentspanid': x_b3_parentspanid,
+        'x-b3-sampled': x_b3_sampled,
+        'x-b3-flags': x_b3_flags,
+        'x-ot-span-context': x_ot_span_context
         }
-        image = client.get(image_url, headers=headers)
+    image = client.get(image_url, headers=headers)
     image = Image.open(BytesIO(image.content))
     image.save(f"static/{animal}.jpg")
     image_file = f"static/{animal}.jpg"
