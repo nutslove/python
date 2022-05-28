@@ -156,7 +156,7 @@ async def plus(
             'x-b3-flags': x_b3_flags,
             'x-ot-span-context': x_ot_span_context
             }
-        results = client.get(url, timeout=None, headers=headers)
+        results = client.get(url, headers=headers)
     except Exception as e:
         print(e)
 
