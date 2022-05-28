@@ -71,7 +71,8 @@ async def plus(
             'x-b3-flags': x_b3_flags,
             'x-ot-span-context': x_ot_span_context
             }
-        results = client.get(url, timeout=None, headers=headers)
+        # results = client.get(url, timeout=None, headers=headers)
+        results = client.get(url, headers=headers)
     except Exception as e:
         print(e)
 
@@ -98,8 +99,10 @@ async def plus(
         result = "数字を入力して下さい"
         animal_type = json.loads(results.text)[2]
         image_url = "http://calculate.default.svc.cluster.local/api/v1/image/" + animal_type
-        with httpx.Client() as client:
-            image = client.get(image_url, headers=headers)
+        # with httpx.Client() as client:
+        #     image = client.get(image_url, headers=headers)
+        client = httpx.Client()
+        image = client.get(image_url, headers=headers)
         image = Image.open(BytesIO(image.content))
         image.save(f"static/{animal_type}.jpg")
         animal = json.loads(results.text)[3]
