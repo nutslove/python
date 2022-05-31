@@ -3,16 +3,12 @@ import httpx
 import json
 from io import BytesIO
 from PIL import Image
-from fastapi import FastAPI, Request, Form
+from typing import Optional
+from fastapi import FastAPI, Request, Form, Header
 from fastapi.responses import HTMLResponse ## Requestに対してResponseとしてHTMLを返す
-from fastapi.staticfiles import StaticFiles # 
+from fastapi.staticfiles import StaticFiles #
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import FileResponse ## Requestに対してResponseとしてファイルを返す # aiofilesのインストールが必要(pip3 install aiofiles)
-
-class ModelName(str, Enum):
-    Lee = "Joonki"
-    Kim = "Su"
-    Park = "Min"
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -28,7 +24,10 @@ age = ""
 owner = ""
 
 @app.get("/", response_class=HTMLResponse)
-async def plus(request: Request):
+async def plus(
+    request: Request,
+    version: Optional[str] = Header(None)
+    ):
 
     global title
     global calculation
@@ -40,10 +39,17 @@ async def plus(request: Request):
     global owner
 
     url = "http://calculate.default.svc.cluster.local/api/v1/calculate"
-    try:
-        results = httpx.get(url, timeout=None)
-    except Exception as e:
-        print(e)
+
+    if version:
+        print('----------------------------Header----------------------------')
+        print('version : ', version)
+        print('----------------------------Header----------------------------')
+
+        with httpx.Client() as client:
+            headers = { 'version': version }
+            results = client.get(url, headers=headers)
+    else:
+        results = httpx.get(url)
 
     # print("Header: ", title.headers) # httpx.getで取得した「オブジェクト.headers」にHTTPヘッダの情報が入っている
     # print("URL: ", title.url) # httpx.getで取得した「オブジェクト.url」にURL情報が入ってる
@@ -57,7 +63,7 @@ async def plus(request: Request):
 
     if "504 Gateway Timeout" in str(results):
         result = "Timeout Error"
-        return templates.TemplateResponse("error.html",{"request": request, "result": result}) 
+        return templates.TemplateResponse("error.html",{"request": request, "result": result})
     elif "429 Too Many Requests" in str(results):
         result = "Too Many Requests"
         return templates.TemplateResponse("error.html",{"request": request, "result": result})
@@ -83,17 +89,30 @@ async def plus(request: Request):
         return templates.TemplateResponse("error.html",{"request": request, "result": result})
 
 @app.post("/", response_class=HTMLResponse)
-async def plus(request: Request, num1: int = Form(...), num2: int = Form(...)):
+async def plus(
+    request: Request,
+    num1: int = Form(...),
+    num2: int = Form(...),
+    version: Optional[str] = Header(None)
+    ):
 
     if animal_type == "cat":
         operator = "addition"
     elif animal_type == "dog":
         operator = "multiplication"
+
     url = f'http://calculate.default.svc.cluster.local/api/v1/calculate?operator={operator}&num_1={num1}&num_2={num2}'
-    try:
-        results = httpx.get(url, timeout=None)
-    except Exception as e:
-        print(e)
+
+    if version:
+        print('----------------------------Header----------------------------')
+        print('version : ', version)
+        print('----------------------------Header----------------------------')
+
+        with httpx.Client() as client:
+            headers = { 'version': version }
+            results = client.get(url, headers=headers)
+    else:
+        results = httpx.get(url)
 
     print("==================================")
     print(results)

@@ -1,0 +1,37 @@
+---
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: vs-for-canary-release
+  namespace: default
+spec:
+  hosts:
+    - calculate.default.svc.cluster.local # ここは "*" にするとエラーになる
+  http:
+    - route: ## 順番に注意！ 順番通りに評価されるらしく、下のrouteを上に定義するとヘッダーに{version: dog}を入れてもdog-with-multiの方に振り分けされない。
+        - destination:
+            host: calculate.default.svc.cluster.local
+            subset: dog-with-multi
+      match:
+        - headers:
+            version:
+              exact: dog
+    - route:
+        - destination:
+            host: calculate.default.svc.cluster.local # host項目は必須. subsetだけだとエラーになる
+            subset: cat-with-plus
+---
+kind: DestinationRule
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: ds-for-canary-release
+  namespace: default
+spec:
+  host: calculate.default.svc.cluster.local
+  subsets:
+    - labels:
+        version: cat-plus
+      name: cat-with-plus
+    - labels:
+        version: dog-multi
+      name: dog-with-multi
