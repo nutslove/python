@@ -2,7 +2,7 @@
 kind: VirtualService
 apiVersion: networking.istio.io/v1alpha3
 metadata:
-  name: vs-for-canary-release
+  name: vs-for-fault-injection
   namespace: default
 spec:
   hosts:
