@@ -47,9 +47,9 @@ async def plus(
 
         with httpx.Client() as client:
             headers = { 'version': version }
-            results = client.get(url, headers=headers)
+            results = client.get(url, headers=headers, timeout=None)
     else:
-        results = httpx.get(url)
+        results = httpx.get(url, timeout=None)
 
     # print("Header: ", title.headers) # httpx.getで取得した「オブジェクト.headers」にHTTPヘッダの情報が入っている
     # print("URL: ", title.url) # httpx.getで取得した「オブジェクト.url」にURL情報が入ってる
@@ -74,7 +74,7 @@ async def plus(
         result = "数字を入力して下さい"
         animal_type = json.loads(results.text)[2]
         image_url = "http://calculate.default.svc.cluster.local/api/v1/image/" + animal_type
-        image = httpx.get(image_url)
+        image = httpx.get(image_url, timeout=None)
         image = Image.open(BytesIO(image.content))
         image.save(f"static/{animal_type}.jpg")
         animal = json.loads(results.text)[3]
@@ -110,9 +110,9 @@ async def plus(
 
         with httpx.Client() as client:
             headers = { 'version': version }
-            results = client.get(url, headers=headers)
+            results = client.get(url, headers=headers, timeout=None)
     else:
-        results = httpx.get(url)
+        results = httpx.get(url, timeout=None)
 
     print("==================================")
     print(results)
