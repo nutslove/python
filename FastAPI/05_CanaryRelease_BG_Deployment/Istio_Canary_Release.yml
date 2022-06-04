@@ -6,11 +6,11 @@ metadata:
   namespace: default
 spec:
   hosts:
-    - calculate.default.svc.cluster.local # ここは "*" にするとエラーになる
+    - calculate.default.svc.cluster.local
   http:
     - route:
         - destination:
-            host: calculate.default.svc.cluster.local # host項目は必須. subsetだけだとエラーになる
+            host: calculate.default.svc.cluster.local
             subset: cat-with-plus
           weight: 90
         - destination:
