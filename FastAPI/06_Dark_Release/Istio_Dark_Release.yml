@@ -24,7 +24,7 @@ spec:
 kind: DestinationRule
 apiVersion: networking.istio.io/v1alpha3
 metadata:
-  name: ds-for-canary-release
+  name: ds-for-dark-release
   namespace: default
 spec:
   host: calculate.default.svc.cluster.local
