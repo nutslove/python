@@ -27,9 +27,7 @@ metadata:
 spec:
   selector:
     app: client
-  type: NodePort
   ports:
   - name: http
     protocol: TCP
     port: 80
-    nodePort: 30000
