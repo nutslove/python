@@ -2,7 +2,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: calculate-cb-policy
+  name: dr-for-circuit-breaker
 spec:
   host: calculate.default.svc.cluster.local
   trafficPolicy:
