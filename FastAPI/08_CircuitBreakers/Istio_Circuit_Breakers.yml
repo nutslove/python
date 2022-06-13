@@ -8,13 +8,14 @@ spec:
   trafficPolicy:
     outlierDetection:
       consecutiveGatewayErrors: 3
-      interval: 30s
-      baseEjectionTime: 5s
+      interval: 10s
+      baseEjectionTime: 30s
+      maxEjectionPercent: 99
 ---
 kind: VirtualService
 apiVersion: networking.istio.io/v1alpha3
 metadata:
-  name: vs-for-canary-release
+  name: vs-for-circuit-breaker
   namespace: default
 spec:
   hosts:
